@@ -2,6 +2,8 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import ChatScreen from '../../componnets/ChatScreen';
 import Sidebar from '../../componnets/Sidebar';
+import { auth, db } from '../../firebase';
+
 function Chat() {
   return (
     <Container>
@@ -17,6 +19,14 @@ function Chat() {
 }
 
 export default Chat;
+
+export async function getServerSideProps(context) {
+  const ref = db.collection('chats').doc(context.query.id);
+  const messagesRes = await ref
+    .collection('messages')
+    .orderBy('timestamp', 'asc')
+    .get();
+}
 const Container = styled.div`
   display: flex;
 `;
