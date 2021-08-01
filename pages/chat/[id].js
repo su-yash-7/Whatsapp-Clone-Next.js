@@ -16,7 +16,7 @@ function Chat({ chat, messages }) {
       </Head>
       <Sidebar />
       <ChatContainer>
-        <ChatScreen hat={chat} messages={messages} />
+        <ChatScreen chat={chat} messages={messages} />
       </ChatContainer>
     </Container>
   );
@@ -39,6 +39,7 @@ export async function getServerSideProps(context) {
       ...messages,
       timestamp: messages.timestamp.toDate().getTime(),
     }));
+
   const chatRes = await ref.get();
   const chat = {
     id: chatRes.id,
